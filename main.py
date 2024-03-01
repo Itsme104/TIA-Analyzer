@@ -1,95 +1,11 @@
 # Author: Ryan Stone
 # Project: TIA Analyzer
-# Date: 3/XX/2024
+# Date: 3/1/2024
 
-twirlers, dancers, guards, stationaryPerc, marchingPerc, winds, jazz = [], [], [], [], [], [], []
+from classes import Group, School       
+
+twirlers, dancers, guards, stationaryPerc, marchingPerc, winds, jazz = Group("Twirlers"), Group("Dance"), Group("Guard"), Group("Stationary Percussion"), Group("Marching Percussion"), Group("Winds"), Group("Jazz")
 groups = twirlers, dancers, guards, stationaryPerc, marchingPerc, winds, jazz
-
-class School:
-    def __init__(self, groupDiv, name, total, date, cat1, s1, cat2, s2, cat3=None, s3=None, cat4=None, s4=None, cat5=None, s5=None):
-        group, division = groupDiv.split(":")
-        self.group = group.strip(" ")
-        self.division = division.strip(" ")
-        self.name = name
-        self.total = total
-        self.date = date
-        self.cat1, self.cat2, self.cat3, self.cat4, self.cat5 = cat1, cat2, cat3, cat4, cat5
-        self.score1, self.score2, self.score3, self.score4, self.score5 = s1, s2, s3, s4, s5
-        
-    def __str__(self):
-        outStr = "~~~~~" * 8 + '\n'
-        outStr += f"Name: {self.getName()}\n"
-        outStr += f"Date: {self.getDate()}\n"
-        outStr += f"Group: {self.getGroup()}\n"
-        outStr += f"Division: {self.getDivision()}\n\n"
-
-        outStr += f"{self.getCategory1()}: {self.getScore1()}\n"
-        outStr += f"{self.getCategory2()}: {self.getScore2()}\n"
-
-        if self.getCategory3() != None:
-            outStr += f"{self.getCategory3()}: {self.getScore3()}\n"
-            if self.getCategory4() != None:
-                outStr += f"{self.getCategory4()}: {self.getScore4()}\n"
-                if self.getCategory5() != None:
-                    outStr += f"{self.getCategory5()}: {self.getScore5()}\n"
-
-
-        outStr += f"\nTotal: {self.getTotal()}\n"
-        return outStr + "~~~~~" * 8 + '\n'
-    
-
-    def getGroup(self):
-        return self.group
-    def getDivision(self):
-        return self.division
-    def getName(self):
-        return self.name
-    def getTotal(self):
-        return self.total
-    def getDate(self):
-        return self.date
-    
-    def getCategory1(self):
-        return self.cat1
-    def getCategory2(self):
-        return self.cat2
-    def getCategory3(self):
-        return self.cat3
-    def getCategory4(self):
-        return self.cat4
-    def getCategory5(self):
-        return self.cat5
-    
-    def getScore1(self):
-        return self.score1
-    def getScore2(self):
-        return self.score2
-    def getScore3(self):
-        return self.score3
-    def getScore4(self):
-        return self.score4
-    def getScore5(self):
-        return self.score5
-    
-    
-    def update(self, school):
-        self.date = school.getDate()
-        self.total = school.getTotal()
-        self.cat1 = school.getCategory1()
-        self.score1 = school.getScore2()
-        self.cat2 = school.getCategory2()
-        self.score2 = school.getScore2()
-
-        if self.getCategory3() != None:
-            self.cat3 = school.getCategory3()
-            self.score3 = school.getScore3()
-            if self.getCategory4() != None:
-                self.cat4 = school.getCategory4()
-                self.score4 = school.getScore4()
-                if self.getCategory5() != None:
-                    self.cat5 = school.getCategory5()
-                    self.score5 = school.getScore5()
-            
 
 
 def readFile(fileName):
@@ -114,62 +30,61 @@ def readFile(fileName):
 
 def addSchool(school):
     append = True
-    # Check For Pre-existing
     if school.getGroup() == "Twirlers":
-        for matchSchool in twirlers:
+        for matchSchool in twirlers.getSchools():
             if matchSchool.getName() == school.getName() and matchSchool.getDivision() == school.getDivision():
                 matchSchool.update(school)
                 append = False
         if append == True:
-            twirlers.append(school)
+            twirlers.addSchool(school)
 
     elif school.getGroup() == "Dance":
-        for matchSchool in dancers:
+        for matchSchool in dancers.getSchools():
             if matchSchool.getName() == school.getName() and matchSchool.getDivision() == school.getDivision():
                 matchSchool.update(school)
                 append = False
         if append == True:
-            dancers.append(school)
+            dancers.addSchool(school)
 
     elif school.getGroup() == "Guard":
-        for matchSchool in guards:
+        for matchSchool in guards.getSchools():
             if matchSchool.getName() == school.getName() and matchSchool.getDivision() == school.getDivision():
                 matchSchool.update(school)
                 append = False
         if append == True:
-            guards.append(school)
+            guards.addSchool(school)
 
     elif school.getGroup() == "Stationary Percussion":
-        for matchSchool in stationaryPerc:
+        for matchSchool in stationaryPerc.getSchools():
             if matchSchool.getName() == school.getName() and matchSchool.getDivision() == school.getDivision():
                 matchSchool.update(school)
                 append = False
         if append == True:
-            stationaryPerc.append(school)
+            stationaryPerc.addSchool(school)
 
     elif school.getGroup() == "Marching Percussion":
-        for matchSchool in marchingPerc:
+        for matchSchool in marchingPerc.getSchools():
             if matchSchool.getName() == school.getName() and matchSchool.getDivision() == school.getDivision():
                 matchSchool.update(school)
                 append = False
         if append == True:
-            marchingPerc.append(school)
+            marchingPerc.addSchool(school)
 
     elif school.getGroup() == "Winds":
-        for matchSchool in winds:
+        for matchSchool in winds.getSchools():
             if matchSchool.getName() == school.getName() and matchSchool.getDivision() == school.getDivision():
                 matchSchool.update(school)
                 append = False
         if append == True:
-            winds.append(school)
+            winds.addSchool(school)
 
     elif school.getGroup() == "Jazz":
-        for matchSchool in jazz:
+        for matchSchool in jazz.getSchools():
             if matchSchool.getName() == school.getName() and matchSchool.getDivision() == school.getDivision():
                 matchSchool.update(school)
                 append = False
         if append == True:
-            jazz.append(school)
+            jazz.addSchool(school)
 
     else:
         print("????? time")
@@ -207,27 +122,74 @@ def convertData(data):
         addSchool(school)
 
 
-#twirlers, dancers, guards, stationaryPerc, marchingPerc, winds, jazz
-def selectData():
-    options = '''Databases:
-1: Twirlers
-2: Dancers
-3: Guards
-4: Stationary Percussion
-5: Marching Percussion
-6: Winds
-7: Jazz'''
-    print(options)
-    user = None
-    while user == None:
-        user = input("Which Database Would You Like To View? ")
-        if user in ['1', '2', '3', '4', '5', '6', '7']:
-            user = int(user)-1
-    group = groups[user]
+
+def getSelection(names, question, index=False, mult=False):
+    if question[-1] != " ":
+        question += " "
+
+    indexes = [str(i+1) for i in range(len(names))]
+    for i, name in enumerate(names):
+        print(f"{i+1}: {name}")
     
-    for school in group:
-        if school.getDivision() == "SAP" or school.getName() == "Northern York HS":
-            print(school)
+    if mult == False:
+        user = None
+        while user not in indexes:
+            user = input(question)
+    else:
+        print("Note: Enter Nothing To Continue.")
+        done, userList = False, []
+        while done == False:
+            user = input(question)
+            if user in indexes:
+                if index == False:
+                    print("Added", names[int(user)-1])
+                    userList.append(names[int(user)-1])
+                else:
+                    print("Added", names[int(user)-1])
+                    userList.append(int(user)-1)
+            elif user == "":
+                done = True
+    print()
+
+    if mult == False:
+        if index == False:
+            return names[int(user)-1]
+        else:
+            return int(user)-1
+    else:
+        return userList
+
+
+
+def selectData():
+    selection = getSelection(["Twirlers", "Dancers", "Guards", "Stationary Percussion", "Marching Percussion", "Winds", "Jazz"], "Which Database Would You Like To View?", index=True)
+    group = groups[selection]
+    selection = getSelection(["Name", "Division"], "What Would You Like To Search By?")
+    
+    selectionGroup = []
+    if selection == "Name":
+        schools = group.getSchools()
+        schoolNames = group.getNames()
+        schoolNames.sort()
+
+        for name in schoolNames:
+            for school in schools:
+                if name == school.getName():
+                    print(school)
+
+
+    elif selection == "Division":
+        for division in group.getDivisions():
+            selectionGroup.append(division)
+        selectedDivisions = getSelection(selectionGroup, "What Division(s) Would You Like To Look At?", mult=True)
+        for school in group.getSchools():
+            if school.getDivision() in selectedDivisions:
+                print(school)
+
+    #elif selection == "Total":
+    #    for school in group.getSchools():
+    #        print(school.getTotal())
+
 
 
 def main():
@@ -238,5 +200,10 @@ def main():
 
 
 if __name__ == "__main__":
-    print("\n\n")
-    main()
+    try:
+        main()
+    except:
+        print("An Error Occured.")
+
+    from time import sleep
+    sleep(360)
