@@ -1,11 +1,14 @@
 # Author: Ryan Stone
 # Project: TIA Analyzer
-# Date: 3/1/2024
+# Date: 3/7/2024
+
+from os import system
 
 from classes import Group, School       
 
 twirlers, dancers, guards, stationaryPerc, marchingPerc, winds, jazz = Group("Twirlers"), Group("Dance"), Group("Guard"), Group("Stationary Percussion"), Group("Marching Percussion"), Group("Winds"), Group("Jazz")
 groups = twirlers, dancers, guards, stationaryPerc, marchingPerc, winds, jazz
+
 
 
 def readFile(fileName):
@@ -164,7 +167,7 @@ def getSelection(names, question, index=False, mult=False):
 def selectData():
     selection = getSelection(["Twirlers", "Dancers", "Guards", "Stationary Percussion", "Marching Percussion", "Winds", "Jazz"], "Which Database Would You Like To View?", index=True)
     group = groups[selection]
-    selection = getSelection(["Name", "Division"], "What Would You Like To Search By?")
+    selection = getSelection(["Name", "Division", "Total"], "What Would You Like To Search By?")
     
     selectionGroup = []
     if selection == "Name":
@@ -177,7 +180,6 @@ def selectData():
                 if name == school.getName():
                     print(school)
 
-
     elif selection == "Division":
         for division in group.getDivisions():
             selectionGroup.append(division)
@@ -186,9 +188,16 @@ def selectData():
             if school.getDivision() in selectedDivisions:
                 print(school)
 
-    #elif selection == "Total":
-    #    for school in group.getSchools():
-    #        print(school.getTotal())
+    elif selection == "Total":
+        for school in group.rankSchools('Total'):
+            print(school)
+            school.resetRank()
+
+    #elif selection == "Other":
+    #    category = input()
+    #    for school in group.rankSchools(category):
+    #        print(school)
+    #        school.resetRank()
 
 
 
@@ -202,8 +211,17 @@ def main():
 if __name__ == "__main__":
     try:
         main()
+        again = None
+        while again != 'n':
+            again = input("Would You Like To Do Another Search? ").lower()+" "
+            again = again[0]
+            if again not in ['n', 'y']:
+                print("Please Type Yes Or No.")
+            if again == 'y':
+                for i in range(5):
+                    print()
+                selectData()
     except:
         print("An Error Occured.")
 
-    from time import sleep
-    sleep(360)
+    input("Press Enter To Close.")
