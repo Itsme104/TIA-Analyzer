@@ -1,6 +1,6 @@
 # Author: Ryan Stone
 # Project: TIA Analyzer - Classes
-# Date: 3/1/2024
+# Date: 3/7/2024
 
 class Group:
     def __init__(self, name):
@@ -31,6 +31,14 @@ class Group:
         if division not in self.getDivisions():
             self.divisions.append(division)
 
+    def rankSchools(self, category):
+        ranked = reversed(sorted(self.getSchools()[:], key=lambda school: school.getTotal())) #Get Info for modularity
+        ranked = [school for school in ranked]
+        for (i, school) in enumerate(ranked):
+            school.setRank(i+1)
+        return ranked
+
+
 
 class School:
     def __init__(self, groupDiv, name, total, date, cat1, s1, cat2, s2, cat3=None, s3=None, cat4=None, s4=None, cat5=None, s5=None):
@@ -38,6 +46,7 @@ class School:
         self.group = group.strip(" ")
         self.division = division.strip(" ")
         self.name = name
+        self.rank = None
         self.total = total
         self.date = date
         self.cat1, self.cat2, self.cat3, self.cat4, self.cat5 = cat1, cat2, cat3, cat4, cat5
@@ -47,6 +56,8 @@ class School:
     def __str__(self):
         outStr = "~~~~~" * 8 + '\n'
         outStr += f"Name: {self.getName()}\n"
+        if self.rank != None:
+            outStr += f"Rank: {self.getRank()}\n"
         outStr += f"Date: {self.getDate()}\n"
         outStr += f"Group: {self.getGroup()}\n"
         outStr += f"Division: {self.getDivision()}\n\n"
@@ -75,6 +86,8 @@ class School:
         return self.total
     def getDate(self):
         return self.date
+    def getRank(self):
+        return self.rank
     
     def getCategory1(self):
         return self.cat1
@@ -97,6 +110,17 @@ class School:
         return self.score4
     def getScore5(self):
         return self.score5
+
+    #Here
+    def getInfo(self, category):
+        ...
+
+    
+    def setRank(self, rank):
+        self.rank = rank
+
+    def resetRank(self):
+        self.rank = None
     
     
     def update(self, school):
